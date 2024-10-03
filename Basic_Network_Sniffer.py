@@ -2,7 +2,6 @@ import subprocess
 import time
 from scapy.all import sniff, IP, TCP, UDP, ICMP
 
-
 # Get the current network name (SSID) for Wi-Fi
 def get_network_name():
     try:
@@ -90,9 +89,11 @@ print(f"Network Latency: {latency} ms (to google.com)")
 
 # Start sniffing the network for packets
 print("Sniffing... Press Ctrl+C to stop.")
+
 try:
+    sniff(prn=packet_analysis, store=False, timeout=10)
     while True:
-        sniff(prn=packet_analysis, store=False, timeout=1)
         calculate_bandwidth()
+        time.sleep(1)  # Sleep for a second between bandwidth calculations
 except KeyboardInterrupt:
-    print("Sniffing stopped.")
+    print("Sniffing stopped by user.")
